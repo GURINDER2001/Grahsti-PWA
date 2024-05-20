@@ -6,6 +6,9 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --primary-color: rgb(30 64 175);
+  --accent-color: rgb(252, 208, 74);
+  --grey: #999999;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,14 +19,22 @@
   }
 }
 
+.text-primary-color{
+  color: var(--primary-color);
+}
+.text-accent-color{
+  color: var(--accent-color);
+}
+.bg-primary-color{
+  background: var(--primary-color);
+}
+.bg-accent-color{
+  background: var(--accent-color);
+}
+
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background:white;
 }
 
 @layer utilities {
