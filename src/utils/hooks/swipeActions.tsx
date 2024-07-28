@@ -12,13 +12,13 @@ const useSwipeActions = (fetchData) => {
     return data;
   };
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e:any) => {
     console.log(startPosition.current);
     startPosition.current = e.touches[0].clientX;
     deltaX.current = 0;
   };
 
-  const handleTouchMove = async (e) => {
+  const handleTouchMove = async (e:any) => {
     console.log("touch y--",e.touches[0].clientX );
     console.log(deltaX.current);
     
@@ -27,7 +27,7 @@ const useSwipeActions = (fetchData) => {
   
   };
 
-  const handleTouchEnd = async (e) => {
+  const handleTouchEnd = async (e:any) => {
     console.log(deltaX.current);
     
     if (deltaX.current > 100 && !isRefreshing) { // Adjust threshold as needed

@@ -12,13 +12,13 @@ const usePullToRefresh = (fetchData) => {
     return data;
   };
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e:any) => {
     console.log(startPosition.current);
     startPosition.current = e.touches[0].clientY;
     deltaY.current = 0;
   };
 
-  const handleTouchMove = async (e) => {
+  const handleTouchMove = async (e:any) => {
     console.log("touch y--",e.touches[0].clientY );
     console.log(deltaY.current);
     
@@ -27,7 +27,7 @@ const usePullToRefresh = (fetchData) => {
   
   };
 
-  const handleTouchEnd = async (e) => {
+  const handleTouchEnd = async (e:any) => {
     console.log(deltaY.current);
     
     if (deltaY.current > 100 && !isRefreshing) { // Adjust threshold as needed

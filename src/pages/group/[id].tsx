@@ -49,7 +49,7 @@ const GroupDetails = (props: any) => {
         {showAllMonths && <div className="horizontalList">
           <ul className=' whitespace-nowrap overflow-auto flex flex-row-reverse'>
             {["JAN'24", "FEB'24", "MAR'24", "APR'24", "MAY'24"].reverse().map(month => {
-              return (<li className='inline-block  text-center mx-1 py-3 px-4' >{month}</li>)
+              return (<li className='inline-block  text-center mx-1 py-3 px-4' key={month} >{month}</li>)
             })}
           </ul>
         </div>}
@@ -68,7 +68,7 @@ const GroupDetails = (props: any) => {
           {expenseList.map((expense: any) => {
             // console.log("-----------",expense);
 
-            return (<ExpenseCard data={expense} />)
+            return (<ExpenseCard data={expense} key={expense} />)
           })}
         </div>
 
@@ -86,7 +86,8 @@ export async function getServerSideProps(context: any) {
 
   const groupDetails = await get(API_URLS.groupsDetails(groupId), {}, getAuthorizationHeaders(context))
   const expenses = await get(API_URLS.getExpenses(groupId), {}, getAuthorizationHeaders(context))
-  const memberDetails = await get(API_URLS.getGroupMemberDetails(groupId), {}, getAuthorizationHeaders(context));
+  const memberDetails =null
+  // await get(API_URLS.getGroupMemberDetails(groupId), {}, getAuthorizationHeaders(context));
        
   return {
     props: {

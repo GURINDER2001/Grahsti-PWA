@@ -5,7 +5,7 @@ import { getAuthorizationHeaders } from '@/utils/utilityService'
 import { useRouter } from 'next/router'
 import React from 'react'
 // @ts-ignore
-const joinGroup = ({groupId,hasMemberAlreadyJoined, ...props}) => {
+const JoinGroup = ({groupId,hasMemberAlreadyJoined, ...props}) => {
     console.log(hasMemberAlreadyJoined);
     
     const router = useRouter()
@@ -27,7 +27,7 @@ const handleJoinGroup = ()=>{
   )
 }
 
-export default joinGroup
+export default JoinGroup
 
 export async function getServerSideProps(context: any) {
     // console.log(context.params);

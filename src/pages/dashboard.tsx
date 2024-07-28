@@ -8,7 +8,7 @@ import { getAuthorizationHeaders } from '@/utils/utilityService'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
-const dashboard = (props:any) => {
+const Dashboard = (props:any) => {
   const [active, setActive] = useState(false)
   // useEffect(() => {
   //   const res =  get(API_URLS.groupsListing,{},getAuthorizationHeaders())
@@ -54,7 +54,7 @@ const dashboard = (props:any) => {
   )
 }
 
-export default dashboard
+export default Dashboard
 
 export async function getServerSideProps(context:any) {
   const groups = await get(API_URLS.groupsListing,{},getAuthorizationHeaders(context))

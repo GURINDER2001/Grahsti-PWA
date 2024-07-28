@@ -6,7 +6,7 @@ const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4200'; // R
 const apiClient = axios.create({
     baseURL,
     headers: {
-        authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxZTM4ZWE1ZC1kYmQ2LTQxMmEtYjFhYy0zZjgxOTc1YmE4NzEiLCJpYXQiOjE3MTQ3NzM0ODIsImV4cCI6MTcxODM3MzQ4Mn0.30RDIVpM6AwkSBlutqny8L9OVm0yIjz7vWO3S81qWew",
+        // authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxZTM4ZWE1ZC1kYmQ2LTQxMmEtYjFhYy0zZjgxOTc1YmE4NzEiLCJpYXQiOjE3MTQ3NzM0ODIsImV4cCI6MTcxODM3MzQ4Mn0.30RDIVpM6AwkSBlutqny8L9OVm0yIjz7vWO3S81qWew",
         // Add any default headers here (e.g., authorization token)
         'Content-Type': 'application/json',
     },
