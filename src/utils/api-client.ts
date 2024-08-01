@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import { cookies } from 'next/headers';
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://grahsti-be.kalgury.in"|| 'http://localhost:4200'; // Replace with your API base URL
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "https://grahsti-be.kalgury.in"|| 'http://localhost:4200'; // Replace with your API base URL
 
 const apiClient = axios.create({
     baseURL,
