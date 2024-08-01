@@ -10,7 +10,10 @@ export default async function middleware(request:NextRequest) {
     "/login":1,
     "/register":1
   }
+  console.log("---------PATHNAME---------------",pathname);
+  
   const user = request.cookies.get("token");
+  console.log("---------USER---------------",user);
   if(pathname === "/" && user?.value){
     request.nextUrl.pathname = '/dashboard'
     return NextResponse.redirect(request.nextUrl)
@@ -19,7 +22,8 @@ export default async function middleware(request:NextRequest) {
     return NextResponse.next()
   }
   if(!user?.value){
-    request.nextUrl.pathname = '/login' + `?redirectUrl=${pathname}` 
+    request.nextUrl.pathname = '/login'
+    //  + `?redirectUrl=${pathname}` 
     return NextResponse.redirect(request.nextUrl)
   }
   return NextResponse.next()

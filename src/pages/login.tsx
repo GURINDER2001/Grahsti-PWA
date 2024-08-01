@@ -24,11 +24,19 @@ const Login = (props:any) => {
      
   // take response.token  and set it as cookie with key token
       
+  console.log("---RESPONSE----",response);
   if (response?.token) {
     const token = response.token;
+    console.log(token);
+    
     // Set the token as a cookie with the key 'token' (securely)
-    document.cookie = `token=${token}; path=/; SameSite=Lax; Secure`; // Add HttpOnly for extra security
+    const cookieString = `token=${token}; path=/; SameSite=Lax; Secure`
+    console.log(cookieString);
+    
+    document.cookie = cookieString ; // Add HttpOnly for extra security
     router.push('/dashboard')
+    console.log("done");
+    
   } else {
     // Handle login failure (e.g., display error message)
     console.error("Login failed: Invalid credentials or missing token in response.");
@@ -44,7 +52,7 @@ const Login = (props:any) => {
 
       <img src="/dummp.webp" alt="" style={{mixBlendMode:"multiply", width:"75%"}}/>
 
-      <div className="rounded-t-3xl bg-gray-200 flex-1">
+      <div className="rounded-t-3xl bg-gray-200 flex-1 h-[80vw] bottom-0 fixed w-full">
         <div className="text-center p-6 text-xl font-medium text-stone-700">Login to you account</div>
       <div className="rounded-t-3xl bg-white  p-5 h-full">
         <CustomInput keyname="username" label='' placeholder='Enter your Mobile / Email' errors={errors} register={register} validations={{required:"Username is required"}} />
