@@ -20,7 +20,7 @@ const handleError = (error: any) => {
         // The request was made and the server responded with a status code
         // that falls outside the range of 2xx
         console.error(error?.response?.data);
-        throw new Error(error.response?.data?.title || error.response?.data?.message || 'API request failed');
+        throw new Error(error.response?.data?.detail ||error.response?.data?.title || error.response?.data?.message || 'API request failed');
     } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in browser environments and an instance of http.Client in node.js environments

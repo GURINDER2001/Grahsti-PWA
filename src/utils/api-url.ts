@@ -2,6 +2,7 @@
 export const API_URLS = {
     //auth
     login: "/auth/login",
+    register: "/auth/register",
     //groups
     groupsListing: "/grahsti/groups",
     createGroup: "/grahsti/group",
