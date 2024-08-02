@@ -3,17 +3,13 @@ import path from "path";
 
 export default async function middleware(request:NextRequest) {
   const { pathname } = request.nextUrl;
-// console.log("pathname---",pathname);
 
   const openRoutesMap :any = {
     "/":1,
     "/login":1,
     "/register":1
-  }
-  console.log("---------PATHNAME---------------",pathname);
-  
+  }  
   const user = request.cookies.get("token");
-  console.log("---------USER---------------",user);
   if(pathname === "/" && user?.value){
     request.nextUrl.pathname = '/dashboard'
     return NextResponse.redirect(request.nextUrl)
@@ -22,7 +18,7 @@ export default async function middleware(request:NextRequest) {
     return NextResponse.next()
   }
   if(!user?.value){
-    request.nextUrl.pathname = '/login'
+    request.nextUrl.pathname = '/login'  // TODO: handle redirects later
     //  + `?redirectUrl=${pathname}` 
     return NextResponse.redirect(request.nextUrl)
   }
