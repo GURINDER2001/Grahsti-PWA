@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react'
 
 const Dashboard = (props: any) => {
   const [active, setActive] = useState(false)
+  const [enableAddExpense, setEnableAddExpense] = useState(false)
   // useEffect(() => {
   //   const res =  get(API_URLS.groupsListing,{},getAuthorizationHeaders())
   // }, [])
@@ -51,6 +52,10 @@ const Dashboard = (props: any) => {
           </Link>)
         })}
       </div>
+
+
+      {/* {enableAddExpense && <AddExpense groupId={props.groupDetails.id} groupName={props.groupDetails.title} refreshData={() => refetchExpenseList(props.groupDetails.id)} close={() => setEnableAddExpense(false)} />} */}
+   
 
       {active && <BottomCard active={active} close={() => setActive(false)} >
         <CreateGroup close={() => setActive(false)} />

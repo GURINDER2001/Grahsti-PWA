@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 // @ts-ignore
 const useSwipeActions = (fetchData) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isSwiped, setIsSwiped] = useState(false);
   const startPosition = useRef(0);
   const deltaX = useRef(0);
 
@@ -13,30 +14,30 @@ const useSwipeActions = (fetchData) => {
   };
 
   const handleTouchStart = (e:any) => {
-    console.log(startPosition.current);
     startPosition.current = e.touches[0].clientX;
     deltaX.current = 0;
   };
 
   const handleTouchMove = async (e:any) => {
-    console.log("touch y--",e.touches[0].clientX );
-    console.log(deltaX.current);
-    
-    // const deltaY = e.touches[0].clientY - startPosition.current;
-    deltaX.current = e.touches[0].clientX - startPosition.current;
+    const swipeMovement = e.touches[0].clientX - startPosition.current;
+    deltaX.current= swipeMovement;
+
+  if(!isSwiped && swipeMovement < -80 ){
+    setIsSwiped(true)
+  }
   
   };
 
   const handleTouchEnd = async (e:any) => {
     console.log(deltaX.current);
-    
-    if (deltaX.current > 100 && !isRefreshing) { // Adjust threshold as needed
+    setIsSwiped(false)
+    if (deltaX.current < -100 && !isRefreshing) { // Adjust threshold as needed
         const data = await handleRefresh();
         // Update your component state with the fetched data
       }
   }
 
-  return { isRefreshing, handleTouchStart, handleTouchMove,handleTouchEnd };
+  return { isRefreshing,isSwiped, handleTouchStart, handleTouchMove,handleTouchEnd };
 };
 
 export default useSwipeActions;

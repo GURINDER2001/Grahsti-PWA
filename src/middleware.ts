@@ -10,7 +10,7 @@ export default async function middleware(request:NextRequest) {
     "/register":1
   }  
   const user = request.cookies.get("token");
-  if(pathname === "/" && user?.value){
+  if(openRoutesMap[pathname] && user?.value){
     request.nextUrl.pathname = '/dashboard'
     return NextResponse.redirect(request.nextUrl)
   }
