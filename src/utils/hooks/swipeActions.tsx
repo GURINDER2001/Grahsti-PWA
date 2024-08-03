@@ -22,7 +22,7 @@ const useSwipeActions = (fetchData) => {
     const swipeMovement = e.touches[0].clientX - startPosition.current;
     deltaX.current= swipeMovement;
 
-  if(!isSwiped && swipeMovement < -80 ){
+  if(!isSwiped && swipeMovement < -30 ){
     setIsSwiped(true)
   }
   

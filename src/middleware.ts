@@ -14,7 +14,7 @@ export default async function middleware(request:NextRequest) {
     request.nextUrl.pathname = '/dashboard'
     return NextResponse.redirect(request.nextUrl)
   }
-  if (openRoutesMap[pathname] || pathname.startsWith("/_")) {
+  if (openRoutesMap[pathname] || pathname.startsWith("/manifest")||pathname.startsWith("/_")) {
     return NextResponse.next()
   }
   if(!user?.value){
