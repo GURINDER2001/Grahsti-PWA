@@ -1,7 +1,8 @@
 import axios from 'axios';
 // import { cookies } from 'next/headers';
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL || "https://grahsti-be.kalgury.in"|| 'http://localhost:4200'; // Replace with your API base URL
+const baseURL = process.env.NODE_ENV === "development"? 'http://localhost:4200' : "https://grahsti-be.kalgury.in"; // Replace with your API base URL
+// const baseURL = process.env.NEXT_PUBLIC_API_URL || "https://grahsti-be.kalgury.in"|| 'http://localhost:4200'; // Replace with your API base URL
 
 const apiClient = axios.create({
     baseURL,
@@ -24,7 +25,7 @@ const handleError = (error: any) => {
     } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in browser environments and an instance of http.Client in node.js environments
-        console.error(error.request);
+    console.error(error.request);
         throw new Error('No response received from API');
     } else {
         // Something happened in setting up the request that triggered an Error

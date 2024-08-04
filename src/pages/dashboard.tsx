@@ -1,6 +1,7 @@
 import CreateGroup from '@/components/CreateGroup'
 import SpendChart from '@/components/SpendChart'
 import BottomCard from '@/components/ui/bottomCard'
+import CircularBadge from '@/components/ui/circularBadge'
 import Logout from '@/components/ui/logout'
 import { get, post } from '@/utils/api-client'
 import { API_URLS } from '@/utils/api-url'
@@ -41,10 +42,10 @@ const Dashboard = (props: any) => {
           <button className=' font-bold rounded-full text-sm text-primary-color p-3' onClick={() => setActive(true)}>+ ADD</button>
         </div>
         {props.groups.map((item: any) => {
-          return (<Link href={'/group/' + item.id} key={item.id} className='flex justify-between'>
+          return (<Link href={'/group/' + item.id} key={item.id} className='flex justify-between p-2'>
             {/* <a > */}
-
-            <span className='w-12 h-12 p-4 bg-stone-200 rounded-full'>T</span>
+            <CircularBadge letter={item.title[0]} />
+            {/* <span className='w-12 h-12 p-4 bg-stone-200 rounded-full'>T</span> */}
             <div className="px-4 pt-2 font-bold flex-1">{item.title || "Grop names"}</div>
             <span className='self-center font-extrabold text-xl text-accent-color rounded-full'>{">"}</span>
             {/* </a> */}
@@ -55,7 +56,7 @@ const Dashboard = (props: any) => {
 
 
       {/* {enableAddExpense && <AddExpense groupId={props.groupDetails.id} groupName={props.groupDetails.title} refreshData={() => refetchExpenseList(props.groupDetails.id)} close={() => setEnableAddExpense(false)} />} */}
-   
+
 
       {active && <BottomCard active={active} close={() => setActive(false)} >
         <CreateGroup close={() => setActive(false)} />
@@ -69,10 +70,9 @@ export default Dashboard
 
 export async function getServerSideProps(context: any) {
   const groups = await get(API_URLS.groupsListing, {}, getAuthorizationHeaders(context))
-
   return {
     props: {
-      groups: groups,
+      groups: groups || [],
     }
   }
 }

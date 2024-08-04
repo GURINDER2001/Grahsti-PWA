@@ -6,12 +6,12 @@ const BottomCard = (props:any) => {
     const s ={
         root : 
         //  -bottom-[1000px] 
-            `fixed bg-white
-            p-5  pt-4 left-0 right-0 rounded-tl-2xl rounded-tr-2xl shadow-all-round-strong transition-all duration-500`
+            `fixed bg-white z-20
+            p-5  pt-4 left-0 right-0 rounded-tl-2xl rounded-tr-2xl shadow-all-round-strong  duration-500`
           ,
           
           active :
-            " bottom-0 transition-all duration-500"
+            " bottom-0 duration-500"
           ,
           rootWrapper :
             "fixed left-0 right-[100vw] bottom-[100vh] top-0 transition-opacity duration-10000 overflow-hidden"
@@ -52,7 +52,7 @@ const BottomCard = (props:any) => {
     return (
       <div >
         <div
-          className={'fixed left-0 right-0 bottom-0 top-0  transition-opacity duration-500  bg-zinc-500/25 backdrop-blur-sm'}
+          className={'fixed left-0 right-0 bottom-0 top-0 z-10 transition-opacity duration-500  bg-zinc-500/25 backdrop-blur-sm'}
         //   onClick={close}
         ></div>
         <div className={rootClassName}>

@@ -10,7 +10,7 @@ import { getAuthorizationHeaders } from '@/utils/utilityService';
 // @ts-ignore
 const ExpenseCard = ({ data: expense, ...props }) => {
 
-  const [isSettled, setIsSettled] = useState(expense.status === "SETTLED" || false)
+  const [isSettled, setIsSettled] = useState(expense.settlementStatus === "SETTLED" || false)
   const [showConfirmation, setShowConfirmation] = useState(false)
   const { isRefreshing, isSwiped, handleTouchStart, handleTouchMove, handleTouchEnd } = useSwipeActions(async () => {
     if (!isSettled)
@@ -31,6 +31,28 @@ const ExpenseCard = ({ data: expense, ...props }) => {
     setIsSettled(false)
   }
 
+  function getDateAndMonthName(date:any){
+    const dateformat = new Date(date);
+    const day = dateformat.getDate();
+    const monthNumber = dateformat.getMonth() + 1;
+    const monthName :any= {
+      1:"JAN",
+      2:"FEB",
+      3:"MAR",
+      4:"APR",
+      5:"MAY",
+      6:"JUN",
+      7:"JUL",
+      8:"AUG",
+      9:"SEP",
+      10:"OCT",
+      11:"NOV",
+      12:"DEC",
+    }
+
+    return {day, month: monthName[monthNumber]}
+  }
+
   return (
     <>
     <div className="relative bg-white " key={expense
@@ -46,17 +68,17 @@ const ExpenseCard = ({ data: expense, ...props }) => {
         {/* <a > */}
 
         <div className={` p-2 text-stone-400 text-center bg-k-100 flex-col justify-center`}>
-          <div className='font-medium  '>12</div>
-          <div className='text-[8px] '>MAY</div>
+          <div className='font-medium  '>{getDateAndMonthName(expense?.createdAt).day}</div>
+          <div className='text-[8px] '>{getDateAndMonthName(expense?.createdAt).month}</div>
         </div>
-        <CircularBadge letter={"❗" || expense.category[0]} />
+        <CircularBadge letter={expense.category[0] || "❗" } />
         <div className={` p-2 flex-1 w-1/4 flex flex-col justify-evenly`}>
           <div className="font-medium text-stone-500 text-sm text-ellipsis whitespace-nowrap overflow-hidden">{expense.title || "Expense"}</div>
-          {expense.description && <div className='text-[10px] text-gray-400 text-ellipsis w-4/5 whitespace-nowrap overflow-hidden'>{expense.description}asfjnaj knfkanskfn akjfkafaf</div>}
+          {expense.description && <div className='text-[10px] text-gray-400 text-ellipsis w-4/5 whitespace-nowrap overflow-hidden'>{expense.description}</div>}
         </div>
 
         <div className={` p-2 text-right`}>
-          <div className="font-bold text-green-600 text-sm text-ellipsis whitespace-nowrap overflow-hidden">{expense.amount || "Expense"}</div>
+          <div className="font-bold text-green-600 text-sm text-ellipsis whitespace-nowrap overflow-hidden">₹{expense.amount || 0}</div>
           {<div className='text-[6px] text-gray-400 '>Gurinder Paid</div>}
         </div>
         {/* <span className='self-center font-bold text-lg  text-accent-color rounded-full'>{expense.amount}</span> */}
@@ -69,10 +91,10 @@ const ExpenseCard = ({ data: expense, ...props }) => {
 
     </div>
        {showConfirmation && <BottomCard active={showConfirmation} close={() => setShowConfirmation(false)} >
-       Confirmation
-       <small>You are about to unsettle a expense.</small>
-       <div className="">
-         <Button text={"Confirm"} varaiant={'primary'} key={"confirm"} onClick={async () => await unsettleExpense(expense.id)} />
+       <div className="text-center font-bold mt-8">CONFIRMATION</div>
+       <small className='text-center block'>You are about to unsettle a expense.</small>
+       <div className=" mt-5">
+         <Button text={"Confirm"} varaiant={'secondary'} key={"confirm"} onClick={async () => await unsettleExpense(expense.id)} />
        </div>
      </BottomCard>}
      </>

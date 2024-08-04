@@ -7,7 +7,7 @@ import usePullToRefresh from '@/utils/hooks/pullToRefresh';
 import { getAuthorizationHeaders } from '@/utils/utilityService';
 import { group } from 'console';
 import Link from 'next/link';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const GroupDetails = (props: any) => {
   // console.log(props);
@@ -15,6 +15,8 @@ const GroupDetails = (props: any) => {
   const [enableAddExpense, setEnableAddExpense] = useState(false)
   const [expenseList, SetExpenseList] = useState(props.expenses || [])
   const [isAdminMember,setIsAdminMember] = useState(props?.memberDetails?.isAdmin)
+  const [calculations,setCalculations] = useState({total: 0, settled: 0, unsettled:0})
+
   // const [data, setData] = useState([]);
   const { isRefreshing, handleTouchStart, handleTouchMove, handleTouchEnd } = usePullToRefresh(async () => {
     // const response = await fetch('/api/expenses'); // Replace with your API endpoint
@@ -24,10 +26,32 @@ const GroupDetails = (props: any) => {
   });
 
   async function refetchExpenseList(groupId: any) {
-    alert()
     const expenses = await get(API_URLS.getExpenses(groupId), {}, getAuthorizationHeaders())
     SetExpenseList(expenses);
   }
+
+  useEffect(() => {
+    calculateAndShowTotalExpense(expenseList);
+  }, [expenseList])
+
+  function calculateAndShowTotalExpense(expenseList:any[]){
+    let calculationObject = {
+      total :0,
+      settled: 0,
+      unsettled: 0
+    }
+
+    for (const expense of expenseList) {
+      calculationObject.total += expense.amount;
+      if(expense.settlementStatus === "SETTLED")
+        calculationObject.settled += expense.amount;
+      else
+      calculationObject.unsettled += expense.amount;
+    }
+
+    setCalculations(calculationObject);
+  }
+  
   return (
     <div className='bg-primary-color text-white overflow-hidden'>
       {/* ---------------- REFRESH PULLOVER STARTS ------------------- */}
@@ -40,8 +64,9 @@ const GroupDetails = (props: any) => {
 </svg>
         </div>}
        {/* ---------------- REFRESH PULLOVER ENDS ------------------- */}
-      <div className="header  flex justify-between font-bold  p-5 " onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}>
+      {/* <div className="header  flex justify-between font-bold  p-5 " onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}> */}
+      <div className="header  flex justify-between font-bold  p-5 ">
         <Link href={'/dashboard'} className=" flex-1" >{"<"}</Link>
         <div className="grouptitle flex-1 text-center">{props.groupDetails.title}</div>
         <div className="flex-1 text-end">{"i"}</div>
@@ -50,10 +75,21 @@ const GroupDetails = (props: any) => {
       <div className="month-container  px-5 ">
         <div className="flex justify-between">
           <div>
-            <div className="block font-semibold" onClick={() => setShowAllMonths(!showAllMonths)}>{"May'24"} ^</div>
+            <div className="block font-semibold" onClick={() => setShowAllMonths(!showAllMonths)}>{"Aug'24"}</div>
             <small>This month</small>
           </div>
-          <div className="sort"></div>
+          <div className=" text-center">
+            <small className="  text-[10px] font-bold">Total Spent</small>
+            <div className="font-bold">₹{calculations.total}</div>
+          </div>
+          <div className=" text-center ">
+            <small className="opacity-70 text-[10px]">Settled</small>
+            <div className="font-semibold">₹{calculations.settled}</div>
+          </div>
+          <div className=" text-center ">
+            <small className="opacity-70 text-[10px]">Unsettled</small>
+            <div className="font-semibold">₹{calculations.unsettled}</div>
+          </div>
         </div>
         {showAllMonths && <div className="horizontalList">
           <ul className=' whitespace-nowrap overflow-auto flex flex-row-reverse'>
@@ -62,7 +98,7 @@ const GroupDetails = (props: any) => {
             })}
           </ul>
         </div>}
-
+        {/* <small>Spent {(calculations.total/props.groupDetails.totalBudget)*100}% of ₹{props.groupDetails.totalBudget} budget. </small> */}
       </div>
 
       <div className="expenses mt-5 bg-white text-stone-800 rounded-t-2xl p-5 ">
@@ -77,7 +113,7 @@ const GroupDetails = (props: any) => {
           {expenseList.map((expense: any) => {
             // console.log("-----------",expense);
 
-            return (<ExpenseCard data={expense} key={expense} />)
+            return (<ExpenseCard data={expense} key={expense.id} />)
           })}
         </div>
 
@@ -95,7 +131,9 @@ export async function getServerSideProps(context: any) {
   const groupId = context.params['id']
 
   const groupDetails = await get(API_URLS.groupsDetails(groupId), {}, getAuthorizationHeaders(context))
-  const expenses = await get(API_URLS.getExpenses(groupId), {}, getAuthorizationHeaders(context))
+  const expenses = await get(API_URLS.getExpenses(groupId), {}, getAuthorizationHeaders(context));
+  console.log(groupDetails);
+  
   const memberDetails =null
   // await get(API_URLS.getGroupMemberDetails(groupId), {}, getAuthorizationHeaders(context));
        
