@@ -11,6 +11,10 @@ const Button = ({ varaiant, text, ...props }) => {
             return (
                 <button className='bg-blue-100 text-primary-color py-3 text-center rounded-full text-white font-bold mx-auto mt-2 block w-full' {...props}>{text}</button>
             )
+        case "danger":
+            return (
+                <button className='bg-red-100 text-red-800 py-3 text-center rounded-full font-bold mx-auto mt-2 block w-full' {...props}>{text}</button>
+            )
         case "ghost":
             return (
                 <button className='text-primary-color py-3 text-center rounded-full text-white font-bold mx-auto mt-2 block w-full' {...props}>{text}</button>

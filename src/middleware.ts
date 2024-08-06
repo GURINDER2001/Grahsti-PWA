@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
+
 
 export default async function middleware(request:NextRequest) {
   const { pathname } = request.nextUrl;
@@ -14,12 +14,12 @@ export default async function middleware(request:NextRequest) {
     request.nextUrl.pathname = '/dashboard'
     return NextResponse.redirect(request.nextUrl)
   }
-  if (openRoutesMap[pathname] || pathname.startsWith("/manifest")||pathname.startsWith("/_")) {
+  if (openRoutesMap[pathname] || pathname.startsWith("/manifest")||pathname.startsWith("/_") || pathname.startsWith("/login") ) {
     return NextResponse.next()
   }
   if(!user?.value){
-    request.nextUrl.pathname = '/login'  // TODO: handle redirects later
-    //  + `?redirectUrl=${pathname}` 
+    request.nextUrl.pathname = '/login';
+    request.nextUrl.searchParams.set("redirectUrl",pathname ) 
     return NextResponse.redirect(request.nextUrl)
   }
   return NextResponse.next()
