@@ -41,7 +41,7 @@ const Dashboard = (props: any) => {
           <h3 className="font-bold text-stone-500 text-xl self-center">Groups</h3>
           <button className=' font-bold rounded-full text-sm text-primary-color p-3' onClick={() => setActive(true)}>+ ADD</button>
         </div>
-        {props.groups.map((item: any) => {
+        {props.groups?.map((item: any) => {
           return (<Link href={'/group/' + item.id} key={item.id} className='flex justify-between p-2'>
             {/* <a > */}
             <CircularBadge letter={item.title[0]} />

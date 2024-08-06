@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { post } from '../utils/api-client';
+import { get, post } from '../utils/api-client';
 import { redirect } from 'next/navigation';
 import { API_URLS } from '@/utils/api-url';
 import CustomInput from '@/components/ui/customInput';
@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 // useRouter
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link';
+import { getAuthorizationHeaders } from '@/utils/utilityService';
 
 const Login = (props: any) => {
   const router = useRouter();
@@ -36,6 +37,10 @@ const Login = (props: any) => {
         // Set the token as a cookie with the key 'token' (securely)
         const cookieString = `token=${token}; path=/; SameSite=Lax; Secure`
         document.cookie = cookieString; // Add HttpOnly for extra security
+
+        const userDetails = await get(API_URLS.getUserDetails, {}, getAuthorizationHeaders());
+        localStorage.setItem("user",JSON.stringify(userDetails));
+
         router.push(queryParams.get('redirectUrl') ?? '/dashboard');
 
       } else {
