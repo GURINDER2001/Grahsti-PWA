@@ -2,6 +2,7 @@ import CreateGroup from '@/components/CreateGroup'
 import SpendChart from '@/components/SpendChart'
 import BottomCard from '@/components/ui/bottomCard'
 import CircularBadge from '@/components/ui/circularBadge'
+import ArrowIcon from '@/components/ui/icons/arrowIcon'
 import Logout from '@/components/ui/logout'
 import { get, post } from '@/utils/api-client'
 import { API_URLS } from '@/utils/api-url'
@@ -12,6 +13,7 @@ import React, { useEffect, useState } from 'react'
 const Dashboard = (props: any) => {
   const [active, setActive] = useState(false)
   const [enableAddExpense, setEnableAddExpense] = useState(false)
+  const [groupsList, setGroupsList] = useState(props.groups)
   // useEffect(() => {
   //   const res =  get(API_URLS.groupsListing,{},getAuthorizationHeaders())
   // }, [])
@@ -41,13 +43,13 @@ const Dashboard = (props: any) => {
           <h3 className="font-bold text-stone-500 text-xl self-center">Groups</h3>
           <button className=' font-bold rounded-full text-sm text-primary-color p-3' onClick={() => setActive(true)}>+ ADD</button>
         </div>
-        {props.groups?.map((item: any) => {
+        {groupsList?.map((item: any) => {
           return (<Link href={'/group/' + item.id} key={item.id} className='flex justify-between p-2'>
             {/* <a > */}
             <CircularBadge letter={item.title[0]} />
             {/* <span className='w-12 h-12 p-4 bg-stone-200 rounded-full'>T</span> */}
             <div className="px-4 pt-2 font-bold flex-1">{item.title || "Grop names"}</div>
-            <span className='self-center font-extrabold text-xl text-accent-color rounded-full'>{">"}</span>
+            <span className='self-center font-extrabold text-xl text-accent-color rounded-full'><ArrowIcon dimension="25px" color="#fcd04a" directionClass={"rotate-180"} /></span>
             {/* </a> */}
 
           </Link>)

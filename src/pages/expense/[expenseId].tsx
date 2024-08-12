@@ -1,7 +1,9 @@
 import AddExpense from '@/components/AddExpense'
+import CategoryBadge from '@/components/ui/CategoryBadge'
 import BottomCard from '@/components/ui/bottomCard'
 import Button from '@/components/ui/button'
 import CircularBadge from '@/components/ui/circularBadge'
+import ArrowIcon from '@/components/ui/icons/arrowIcon'
 import DelelteIcon from '@/components/ui/icons/deleteIcon'
 import EditIcon from '@/components/ui/icons/editIcon'
 import Logo from '@/components/ui/logo'
@@ -11,6 +13,7 @@ import { getAuthorizationHeaders, getDateAndMonthName, getUserDetails, } from '@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const ExpenseDetails = ({ expenseId, expenseDetails }: any) => {
   const router = useRouter();
@@ -22,7 +25,7 @@ const ExpenseDetails = ({ expenseId, expenseDetails }: any) => {
       await deleteRequest(API_URLS.deleteExpense(expenseId), getAuthorizationHeaders());
       router.replace('/group/' + expenseDetails.groupId);
     } catch (error) {
-      // show toast
+      toast.error("Something went wrong. Delete Expense Failed.")
     }
   }
 
@@ -40,7 +43,7 @@ const ExpenseDetails = ({ expenseId, expenseDetails }: any) => {
     >
       <div className='header  pb-12 '>
         <div className="  flex justify-evenly font-bold  p-5 ">
-          <Link href={'/group/' + expenseDetails.groupId} replace={true} className="" >{"<"}</Link>
+          <Link href={'/group/' + expenseDetails.groupId} replace={true} className="" ><ArrowIcon dimension="25px" color="#475569" /></Link>
           <div className="grouptitle flex-1 text-center">{'Expense Details'}</div>
           {isEligibleToManipulate ?
             <div className=" text-end" onClick={() => { setShowDeleteConfirmation(true) }} ><DelelteIcon dimension="25px" color="#991b1b" /></div>
@@ -74,7 +77,8 @@ const ExpenseDetails = ({ expenseId, expenseDetails }: any) => {
         <div className="font-bold text-slate-600 mb-3 text-sm ">Category</div>
         <div className="flex justify-start ">
           <div className="mr-4">
-            <CircularBadge letter={expenseDetails.category[0]} />
+            {/* <CircularBadge letter={expenseDetails.category[0]} />\ */}
+            <CategoryBadge categoryName={expenseDetails.category} />
           </div>
           <span className='self-center rounded-xl  text-slate-500 text-sm font-bold' > {expenseDetails.category}</span>
         </div>

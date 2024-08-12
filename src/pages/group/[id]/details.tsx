@@ -1,10 +1,12 @@
 import Button from '@/components/ui/button'
 import CircularBadge from '@/components/ui/circularBadge'
+import ArrowIcon from '@/components/ui/icons/arrowIcon'
 import { get } from '@/utils/api-client'
 import { API_URLS } from '@/utils/api-url'
 import { getAuthorizationHeaders } from '@/utils/utilityService'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import toast from 'react-hot-toast'
 import { FacebookIcon, FacebookMessengerIcon, FacebookMessengerShareButton, FacebookShareButton, LinkedinIcon, LinkedinShareButton, TelegramIcon, TelegramShareButton, WhatsappIcon, WhatsappShareButton } from 'react-share'
 
 const GroupDetails = ({ groupId, groupDetails, groupMembers, ...props }: any) => {
@@ -14,7 +16,7 @@ const GroupDetails = ({ groupId, groupDetails, groupMembers, ...props }: any) =>
         // if(window)
         navigator?.clipboard.writeText(shareUrl)
             .then(() => {
-                console.log('Text copied to clipboard');
+                toast.success("Copied")
             })
             .catch(err => {
                 console.error('Failed to copy: ', err);
@@ -33,7 +35,7 @@ const GroupDetails = ({ groupId, groupDetails, groupMembers, ...props }: any) =>
         >
             <div className='header  pb-12 '>
                 <div className="  flex justify-between font-bold  p-5 ">
-                    <Link href={'/group/' + groupId} replace={true} className=" flex-1" >{"<"}</Link>
+                    <Link href={'/group/' + groupId} replace={true} className=" flex-1" ><ArrowIcon dimension="25px" color="#475569" /></Link>
                     <div className="grouptitle flex-1 text-center">{'Group Details'}</div>
                     <div className="flex-1 text-end">&nbsp;</div>
                 </div>
@@ -46,7 +48,7 @@ const GroupDetails = ({ groupId, groupDetails, groupMembers, ...props }: any) =>
                 {/* <div className="absolute bg-primary-color w-full top-[-10px]">&nbsp;</div> */}
                 <div className="text-center absolute top-[-20vw] w-full">
 
-                    <div className="circle bg-yellow-100 w-[30vw] h-[30vw] inline-block rounded-full border-4 border-yellow-200 m-5 text-accent-color text-6xl" style={{lineHeight:"25vw"}}>{groupDetails.title[0]}</div>
+                    <div className="circle bg-yellow-100 w-[30vw] h-[30vw] inline-block rounded-full border-4 border-yellow-200 m-5 text-accent-color text-6xl" style={{ lineHeight: "25vw" }}>{groupDetails.title[0]}</div>
 
                 </div>
 
@@ -118,7 +120,7 @@ const GroupDetails = ({ groupId, groupDetails, groupMembers, ...props }: any) =>
                         <div className='flex p-2 ' key={member.id}>
                             <CircularBadge letter={member.username[0]} colorClass={"bg-green-100"} />
                             <span className='flex-1 px-5 self-center'> {member.username}</span>
-                           {member.isAdmin && <span className='px-3  py-1 self-center text-xs  font-bold rounded-lg bg-accent-color text-white'>ADMIN</span>}
+                            {member.isAdmin && <span className='px-3  py-1 self-center text-xs  font-bold rounded-lg bg-accent-color text-white'>ADMIN</span>}
                         </div>
                     )
                 })}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Button from './ui/button'
 import CustomInput from './ui/customInput';
-import CircularBadge from './ui/circularBadge';
+import CategoryBadge from './ui/CategoryBadge';
 
 import { useForm } from 'react-hook-form';
 import { get, post, put } from '@/utils/api-client';
@@ -134,7 +134,7 @@ const AddExpense = ({ groupId, expenseDetails = null, isAdmin = false, close, re
 
                 <CustomInput modifyclass="text-sm" keyname={"description"} label='Description' errors={errors} register={register} validations={{}} />
             </div>
-            <div className=" bg-zinc-300/25 border rounded-2xl p-4 text-stone-700 mt-5">
+            <div className=" bg-zinc-100/50 border rounded-2xl p-4 text-stone-700 mt-5">
 
                 <div className="flex justify-between">
                     <small className='self-center text-[#999]'>Category</small>
@@ -143,8 +143,9 @@ const AddExpense = ({ groupId, expenseDetails = null, isAdmin = false, close, re
                 </div>
                 <ul className='grid grid-cols-4'>
                     {categories.map(category => {
-                        return (<li className={`${selectedCategory == category ? 'bg-blue-400/25' : ''} p-2 m-2 text-center  rounded`} key={category} onClick={() => { setSelectedCategory(category) }}>
-                            <CircularBadge letter={category[0]} />
+                        return (<li className={`${selectedCategory == category ? 'bg-slate-400/25' : ''} p-2 m-2 text-center  rounded`} key={category} onClick={() => { setSelectedCategory(category) }}>
+                            {/* <CircularBadge letter={category[0]} /> */}
+                            <CategoryBadge categoryName={category}/>
                             <div className='text-[8px] font-medium text-ellipsis max-w-max mx-auto mt-1  text-center overflow-hidden whitespace-nowrap'> {category}</div>
                         </li>)
                     })

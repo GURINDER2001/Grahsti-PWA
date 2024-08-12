@@ -1,14 +1,13 @@
 import useSwipeActions from '@/utils/hooks/swipeActions';
 import Link from 'next/link'
 import React, { useState } from 'react'
-import BottomCard from './ui/bottomCard';
-import Button from './ui/button';
-import CircularBadge from './ui/circularBadge';
-import CategoryBadge from './ui/CategoryBadge';
+import BottomCard from './bottomCard';
+import Button from './button';
+import CircularBadge from './circularBadge';
+import CategoryBadge from './CategoryBadge';
 import { put } from '@/utils/api-client';
 import { API_URLS } from '@/utils/api-url';
 import { getAuthorizationHeaders, getDateAndMonthName } from '@/utils/utilityService';
-import toast from 'react-hot-toast';
 // @ts-ignore
 const ExpenseCard = ({ data: expense, isAdmin, loggedInUserId, ...props }) => {
 
@@ -16,11 +15,7 @@ const ExpenseCard = ({ data: expense, isAdmin, loggedInUserId, ...props }) => {
   const [showConfirmation, setShowConfirmation] = useState(false)
   const { isRefreshing, isSwiped, handleTouchStart, handleTouchMove, handleTouchEnd } = useSwipeActions(async () => {
     if (!isEligibleToManipulate()) {
-      toast.success("You can only view others expense",{iconTheme: {
-        primary: '#1e40af',
-        secondary: '#fff',
-      }});
-      // alert("You can only view others expense"); // popup daal do
+      alert("You can only view others expense"); // popup daal do
       return;
     }
     if (!isSettled)
@@ -35,16 +30,11 @@ const ExpenseCard = ({ data: expense, isAdmin, loggedInUserId, ...props }) => {
 
   async function settleExpense(expenseId: any) {
     const settlementResponse = await put(API_URLS.settleExpense(expenseId), {}, getAuthorizationHeaders())
-    toast.success("Expense Settled");
     setIsSettled(true)
   }
   async function unsettleExpense(expenseId: any) {
     const settlementResponse = await put(API_URLS.unsettleExpense(expenseId), {}, getAuthorizationHeaders())
     setShowConfirmation(false)
-    toast.success("Expense Unsettled", {iconTheme: {
-      primary: '#fcd04a',
-      secondary: '#fff',
-    }});
     setIsSettled(false)
   }
 
@@ -70,7 +60,7 @@ const ExpenseCard = ({ data: expense, isAdmin, loggedInUserId, ...props }) => {
           </div>
           {/* <CircularBadge letter={expense.category[0] || "❗"} />
            */}
-            <CategoryBadge categoryName={expense.category || "❗"}/>
+          <CategoryBadge categoryName={expense.category || "❗"} />
           <div className={` p-2 flex-1 w-1/4 flex flex-col justify-evenly`}>
             <div className="font-medium text-stone-500 text-sm text-ellipsis whitespace-nowrap overflow-hidden">{expense.title || "Expense"}</div>
             {expense.description && <div className='text-[10px] text-gray-400 text-ellipsis w-4/5 whitespace-nowrap overflow-hidden'>{expense.description}</div>}

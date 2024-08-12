@@ -14,10 +14,12 @@
     "chart.js": "^4.4.2",
     "next": "14.2.3",
     "next-pwa": "^5.6.0",
+    "pwa-grahti": "file:",
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-hook-form": "^7.51.3",
+    "react-hot-toast": "^2.4.1",
     "react-share": "^5.1.0",
     "save": "^2.9.0"
   },
